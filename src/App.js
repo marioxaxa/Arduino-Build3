@@ -4,7 +4,7 @@ import SvgGridIndex from './Components/SvgGrid/SvgGridIndex';
 import SideBarIndex from './Components/SideBar/SideBarIndex';
 
 function App() {
-
+  //aqui
   const decompress = require('decompress')
 
   const [files, setFiles] = useState([]);
