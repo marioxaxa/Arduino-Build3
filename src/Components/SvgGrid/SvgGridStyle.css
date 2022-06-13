@@ -1,0 +1,5 @@
+.Grid {   
+    min-width: 24vw;
+    min-height: 35vh;
+    border: 2px hsl(0, 0%, 36%) dashed;
+}
