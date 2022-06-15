@@ -1,29 +1,42 @@
 import React from 'react'
 import './SvgGridStyle.css'
 
-export default function SvgGridIndex({ files }) {
+export default function SvgGridIndex({ data}) {
   const parser = new DOMParser();
+  const [count, setCount] = React.useState('0')
 
-  const clickteste = (files) => {
-    const text = parser.parseFromString(files.fileContent, 'text/html')
-    console.log(text)
-  }
+  /*
+  Teste
+
+  const [localData, setLocalData] = React.useState(data);
+  React.useEffect(() => { 
+    setLocalData(data) 
+    setCount(count + 1)
+  }, [data]);
+  **/
 
   return (
-    <div className='Grid' onClick={() => {clickteste(files)}} >
-      {files.map(fileContent => {
-        const doc = parser.parseFromString(fileContent[0], 'text/html');
+    <div className='Grid' key={count} >
+
+      <button className='GridButton' onClick={() => {setCount(count + 1)}}> Load </button>
+
+      {data.map(d => {
+        if(!d.filename.startsWith('svg.icon')) {return}
+        const doc = parser.parseFromString(d.content, 'text/html');
         const svg = doc.getElementsByTagName('svg')[0];
-        if (!svg) return null;
-        return (
-          <svg 
-            width={svg.width.baseVal.value}
-            height={svg.height.baseVal.value}
-            dangerouslySetInnerHTML={{__html: svg.innerHTML}}
-          >  
-          </svg>
-        );
+        return(
+          <div className='IconDiv' key={d.filename} onClick={() =>{console.log(d.filename)}} >
+            <div className='IconSvgDiv'>
+              <svg 
+                width={svg.width.baseVal.value}
+                height={svg.height.baseVal.value}
+                dangerouslySetInnerHTML={{__html: svg.innerHTML}}
+              />
+            </div>
+          </div>
+        )
       })}
+      
     </div>
   )
 }

@@ -1,10 +1,11 @@
 .SideBar {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     background-color: hsl(235, 32%, 10%);
     color: #fff;
-    height: 100%;
+    min-height: 92vh;
+    
     width: 26vw;
     display:flex;
     flex-direction: column;
