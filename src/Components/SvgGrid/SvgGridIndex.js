@@ -2,7 +2,7 @@ import React from 'react'
 import SvgGridItemIndex from '../SvgGridItem/SvgGridItemIndex';
 import './SvgGridStyle.css'
 
-export default function SvgGridIndex({ data}) {
+export default function SvgGridIndex({data}) {
   const parser = new DOMParser();
   const [count, setCount] = React.useState('0')
 
@@ -15,6 +15,7 @@ export default function SvgGridIndex({ data}) {
   React.useEffect(() => { 
     setLocalData(data) 
     setCount(count + 1)
+    console.log("data mudou")
   }, [data]);
   **/
 

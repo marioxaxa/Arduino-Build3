@@ -5,7 +5,6 @@ import JSZip from 'jszip';
 
 function App() {
 
-  const [files, setFiles] = useState([]);
   const [data, setData] = useState([])
   var jsZip = new JSZip
 
@@ -30,11 +29,15 @@ function App() {
             //E adicionado a variavel temporaria formando um objeto composto pelo nome do arquivo e seu conteudo em texto
             dataLet.push({filename: filename, content: fileData})
           })
+          .then( () => {
+            //Aqui transferimos para a variavel global
+          console.log(`tamanho: ${dataLet.length}`)
+          setData(dataLet)
+          }
+          )
         }
         )
-
-        //Aqui transferimos para a variavel global
-        setData(dataLet)
+        
       })
     }
     bufferReader.readAsArrayBuffer(file)}
@@ -58,7 +61,6 @@ function App() {
         await unzipFile(item)  
       }
     }
-    console.log('Load Ended')
   }
 
   return (
