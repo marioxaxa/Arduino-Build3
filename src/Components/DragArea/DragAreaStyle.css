@@ -1,0 +1,12 @@
+.DragAreaDiv {
+    height: 100vh;
+    width: 100%;
+    
+}
+
+.teste {
+    height: 10vh;
+    width: 10vh;
+
+    background-color: aqua;
+}
