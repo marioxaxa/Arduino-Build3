@@ -12,7 +12,7 @@ function App() {
   const [data, setData] = useState([])
 
   //Todos os componentes presentes no drag and drop
-  const [dragMap, setDragMap] = useState(['arduino','rasberry'])
+  const [dragMap, setDragMap] = useState()
 
 
   //Função responsavel por extrair arquivos do zip e adicionalos no data
@@ -30,90 +30,67 @@ function App() {
       jsZip.loadAsync(bufferReader.result).then(function (zip) {
         Object.keys(zip.files).forEach(function (filename) {
           zip.files[filename].async('string').then(function (fileData) {
+
             //E adicionado a variavel temporaria formando um objeto composto pelo nome do arquivo e seu conteudo em texto
+
             let cortado = filename.split('.')
             let componentName
             let contentType
-            console.log(cortado[2])
-            if (cortado[2] && !(cortado[2] == 'fzb') && !(cortado[2] == 'fzp')) {
+
+            //Condicional para dividir os arquivos entre Svgs, fzb e fzp
+            if (cortado[3] == 'svg') {
+
               componentName = cortado[2].slice(0,-(cortado[1].length))
               componentName = componentName.substring(0,20)
               contentType = cortado[1]
-              console.log('normal')
+
             } else if (cortado[2] == 'fzp') {
+
               componentName = cortado[1].substring(0,20)
               contentType = 'part'
-              console.log('part')
+
             } else {
+
               componentName = 'fzbList'
               contentType = cortado[0]
-              console.log('fzb')
+
             }
-
-            console.log(componentName)
-            console.log(contentType)
-            
-            let tempObj = new Object
-
-            tempObj.componentName = componentName
-            tempObj[contentType] = fileData
-
             
             
+
+            //Condional para testar se ja existe um objeto que condiz ao componente atual
             if (contentType == 'fzb') {
+
+              //Nesse caso ja existe um objeto guardando os fzbs
               let index = dataLet.findIndex(e => e.componentName == 'fzbList')
               dataLet[index][contentType] = fileData
+
             } else if (dataLet.some(e => e.componentName ==componentName)) {
-              //console.log(tempObj)
-              //console.log(dataLet)
-              //console.log(contentType)
-              console.log('é igual')
-              tempObj[contentType] = fileData
+
+              //Nesse caso ja existe um objeto guardando o componente atual então apenas adicionamos um novo svg nele
 
               let index = dataLet.findIndex(e => e.componentName == componentName)
               dataLet[index][contentType] = fileData
-            } else {
-              console.log('n é igual')
-              dataLet.push(tempObj)
-            }
-            
-
-            
-
-
-
-            /**
-            if (dataLet.find(a => a.name = componentName)) {
-              console.log(dataLet.find(a => a.name = componentName))
-              let a = dataLet.find(a => a.name = componentName)
-              a[contentType] = fileData
 
             } else {
-              let tempObj = new Object()
-              tempObj.name = componentName
+
+              //Nesse caso ainda não existe um objeto que corresponda ao componente atual então é criado um 
+
+              //Objeto temporario para guardar as variaveis de nome e o arquivo html convertido em texto
+              let tempObj = new Object
+              tempObj.componentName = componentName
               tempObj[contentType] = fileData
-              dataLet.push(tempObj)
-              console.log(`não foi - ${dataLet.find(a => a.name = componentName)}`)
-            }
-            */
-            
-            
 
-            //console.log(dataLet)
-            /** 
-            if (!dataLet.some(componentName)) {
-              console.log('aaaaa')
+              dataLet.push(tempObj)
             }
-            dataLet.push({filename: filename, content: fileData})
-            */
-           //console.log('1')
+            
           })
           .then( () => {
+
             //Aqui transferimos para a variavel global
-            //console.log(`tamanho: ${dataLet.length}`)
             setData(dataLet)
             console.log(data)
-            //console.log('2')
+           
           })
         })
       })
@@ -144,8 +121,8 @@ function App() {
 
   return (
     <div className="App" >
-      <SideBarIndex onDrop={handleDrop} data={data} />
-      {/*<DragAreaIndex dragMap={dragMap}/>*/}
+      <SideBarIndex onDrop={handleDrop} data={data} setDragMap={setDragMap} />
+      <DragAreaIndex dragMap={dragMap} onClick={(dragMap) => {console.log(`DRAGMAP: ${dragMap}`)}} />
     </div>
   );
 }

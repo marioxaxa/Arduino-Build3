@@ -3,7 +3,7 @@ import './SideBarStyle.css'
 import DropZoneIndex from '../DropZone/DropZoneIndex';
 import SvgGridIndex from '../SvgGrid/SvgGridIndex';
 
-export default function SideBarIndex({onDrop, data}) {
+export default function SideBarIndex({onDrop, data, setDragMap}) {
 
   //Não terminado
   const [sideBarStatus, setsideBarStatus] = React.useState(false)
@@ -22,7 +22,7 @@ export default function SideBarIndex({onDrop, data}) {
       <div ref={ButtonRef} className="Button" onClick={ () => SideBarButtonClick()} />
       { sideBarStatus ? 
       <> </> : <DropZoneIndex onDrop={ onDrop }/>}
-      <SvgGridIndex data={data} />
+      <SvgGridIndex data={data} setDragMap={setDragMap} />
     </aside>
   )
 }

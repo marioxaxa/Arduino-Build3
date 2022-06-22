@@ -8,7 +8,9 @@ export default function DragAreaIndex({dragMap}) {
     
   return (
     <div className='DragAreaDiv'>
+      {/*dragMap.map(d => {
         <DragComponentIndex />
+      }) */}
     </div>
   )
 }

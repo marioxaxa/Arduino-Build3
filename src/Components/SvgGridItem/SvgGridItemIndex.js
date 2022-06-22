@@ -1,7 +1,7 @@
 import React from 'react'
 import './SvgGridItemStyle.css'
 
-export default function SvgGridItemIndex( {svg, name}) {
+export default function SvgGridItemIndex( {svg, name, setDragMap, breadboard}) {
 
     const scaleFunc = () => {
         let minor
@@ -29,7 +29,7 @@ export default function SvgGridItemIndex( {svg, name}) {
 
 
   return (
-    <div className='ItemDiv' onClick={() => {console.log(name)}}>
+    <div className='ItemDiv' onClick={() => {setDragMap(breadboard)}}>
         <div className='SvgDiv'>
             <svg className='Svg' 
                 viewBox={scaleFunc()}
